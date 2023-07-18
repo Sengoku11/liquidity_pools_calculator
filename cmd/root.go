@@ -17,9 +17,8 @@ import (
 )
 
 const (
-	decBase            = 10 // base for amountIn
-	contractLen        = 42 // length of contract address in Ethereum
-	amountOutArguments = 4  // [amountIn] [poolAddress] [tokenIn] [tokenOut]
+	decBase     = 10 // base for amountIn
+	contractLen = 42 // length of contract address in Ethereum
 )
 
 var (
@@ -38,13 +37,11 @@ func NewRootCmd(uniswapFee int64) *cobra.Command {
 
 	// Добавление подкоманды
 	rootCmd.AddCommand(&cobra.Command{
-		Use:   "amountOut [amountIn] [poolAddress] [tokenIn] [tokenOut]",
-		Short: "Calculates amountOut",
+		Use:     "amountOut [amountIn] [poolAddress] [tokenIn] [tokenOut]",
+		Short:   "Calculates amountOut",
+		Args:    cobra.ExactArgs(4),
+		Example: "./pool_calc amountOut 155554778123672 0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) != amountOutArguments {
-				return ErrWrongArguments
-			}
-
 			if (len(args[1]) + len(args[2]) + len(args[3])) != 3*contractLen {
 				return ErrInvalidContract
 			}
