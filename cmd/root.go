@@ -22,7 +22,6 @@ const (
 )
 
 var (
-	ErrWrongArguments  = errors.New("wrong amount of arguments")
 	ErrInvalidContract = errors.New("invalid address input")
 	ErrInvalidToken    = errors.New("no such token in the pair")
 	ErrInvalidAmountIn = errors.New("invalid amountIn")
@@ -35,12 +34,12 @@ func NewRootCmd(uniswapFee int64) *cobra.Command {
 		Long:  "A simple liquidity pool calculator",
 	}
 
-	// Добавление подкоманды
 	rootCmd.AddCommand(&cobra.Command{
-		Use:     "amountOut [amountIn] [poolAddress] [tokenIn] [tokenOut]",
-		Short:   "Calculates amountOut",
-		Args:    cobra.ExactArgs(4),
-		Example: "./pool_calc amountOut 155554778123672 0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+		Use:   "amountOut [amountIn] [poolAddress] [tokenIn] [tokenOut]",
+		Short: "Calculates amountOut",
+		Args:  cobra.ExactArgs(4),
+		Example: "./pool_calc amountOut 155554778123672 0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852 " +
+			"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 0xdac17f958d2ee523a2206206994597c13d831ec7",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if (len(args[1]) + len(args[2]) + len(args[3])) != 3*contractLen {
 				return ErrInvalidContract
@@ -52,6 +51,7 @@ func NewRootCmd(uniswapFee int64) *cobra.Command {
 			}
 
 			if amountIn.Cmp(big.NewInt(1)) == -1 {
+				// Check for zero or negative amountIn
 				return ErrInvalidAmountIn
 			}
 

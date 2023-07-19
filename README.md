@@ -4,7 +4,7 @@ output amount that the pool would return if you attempted to swap a specified in
 
 ## Requirements 
 
-You need to have access to a full node in the Ethereum network to make blockchain requests. 
+You need to have access to a Go-Ethereum full node in the Ethereum network to make blockchain requests. 
 You can use a free node at https://www.infura.io. 
 
 Then put the URL path in `.env` file. See `.env.example`.
@@ -15,4 +15,4 @@ Then put the URL path in `.env` file. See `.env.example`.
 ./pool_calc amountOut [amountIn] [poolAddress] [tokenIn] [tokenOut] [flags]
 ```
 
-Or simply run `make example`
+You can also call the `./pool_calc amountOut --help` command for a built-in example or simply run `make example`.
